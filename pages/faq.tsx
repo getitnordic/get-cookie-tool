@@ -2,10 +2,10 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
-import Link from 'next/link';
+
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+export default function Faq() {
   return (
     <>
       <Head>
@@ -16,9 +16,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <p> COOOKIES!!</p>
-          <p> Läs Readme.md</p>
-          <Link href="/faq">Faq</Link>
+          <p> Information om Cookies</p>
         </div>
       </main>
     </>
