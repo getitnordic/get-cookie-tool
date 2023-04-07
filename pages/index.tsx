@@ -7,6 +7,31 @@ import { RegexComp } from './components/regexComp';
 import React from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
+import fs from 'fs';
+
+type Props = {
+  websites: string[],
+};
+
+export const getStaticProps = async () => {
+  const data = fs.readFileSync('filename.txt', 'utf-8');
+  const websites = data.match(/^[^/].*/gm)?.map((line) => line.trim()) ?? [];
+
+  return {
+    props: { websites },
+  };
+};
+
+const IndexPage: React.FC<Props> = ({ websites }) => {
+  return (
+    <div>
+      {websites.map((website, index) => (
+        <div key={index}>{website}</div>
+      ))}
+    </div>
+  );
+};
+
 export default function Home() {
   export const RegexComp = ({ websites }) => {
     // Render the websites
