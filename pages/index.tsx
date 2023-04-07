@@ -3,9 +3,22 @@ import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
 import Link from 'next/link';
+import { RegexComp } from './components/regexComp';
+import React from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  export const RegexComp = ({ websites }) => {
+    // Render the websites
+    return (
+      <div>
+        {websites.map((website, index) => (
+          <div key={index}>{website}</div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <>
       <Head>
