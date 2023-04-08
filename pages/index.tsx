@@ -3,26 +3,40 @@ import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
 import Link from 'next/link';
-import { RegexComp } from './components/regexComp';
+/* import { RegexComp } from './components/regexComp'; */
 import React from 'react';
-const inter = Inter({ subsets: ['latin'] });
-
 import fs from 'fs';
+import path from 'path';
 
 type Props = {
   websites: string[],
 };
 
-export const getStaticProps = async () => {
-  const data = fs.readFileSync('filename.txt', 'utf-8');
-  const websites = data.match(/^[^/].*/gm)?.map((line) => line.trim()) ?? [];
+export const getStaticProps = async (): Promise<{ props: Props }> => {
+  const filePath = path.join(process.cwd(), 'public/assets', 'data.txt');
+  const data = fs.readFileSync(filePath, 'utf-8');
+  const regex = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i;
+  const websites = data
+    .split('\n')
+    .filter((line) => regex.test(line.trim()))
+    .map((line) => line.trim());
 
   return {
-    props: { websites },
+    props: {
+      websites,
+    },
   };
 };
 
-const IndexPage: React.FC<Props> = ({ websites }) => {
+/* export const getStaticProps = async () => {
+  const data = fs.readFileSync('public\assets\data.txt', 'utf-8');
+  const websites = data.match(/^[^/].*/ /* gm)?.map((line) => line.trim()) ?? [];
+  return {
+    props: { websites },
+  };
+}; */
+
+/* const IndexPage: React.FC<Props> = ({ websites }) => {
   return (
     <div>
       {websites.map((website, index) => (
@@ -30,20 +44,20 @@ const IndexPage: React.FC<Props> = ({ websites }) => {
       ))}
     </div>
   );
-};
+}; */
 
-export default function Home() {
-  export const RegexComp = ({ websites }) => {
-    // Render the websites
-    return (
-      <div>
-        {websites.map((website, index) => (
-          <div key={index}>{website}</div>
-        ))}
-      </div>
-    );
-  };
+/* export const RegexComp = ({ websites }) => {
+  // Render the websites
+  return (
+    <div>
+      {websites.map((website, index) => (
+        <div key={index}>{website}</div>
+      ))}
+    </div>
+  );
+}; */
 
+export default function Home({ websites }: Props) {
   return (
     <>
       <Head>
@@ -57,6 +71,14 @@ export default function Home() {
           <p> COOOKIES!!</p>
           <p> Läs Readme.md</p>
           <Link href="/faq">Faq</Link>
+        </div>
+
+        <div id={styles.websiteContainer}>
+          <div>
+            {websites.map((website: any, index: any) => (
+              <div key={index}>{website}</div>
+            ))}
+          </div>
         </div>
       </main>
     </>
