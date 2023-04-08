@@ -69,7 +69,7 @@ export default function Home({ websites }: Props) {
       <main className={styles.main}>
         <div className={styles.description}>
           <p> COOOKIES!!</p>
-          <p> Läs Readme.md</p>
+
           <Link href="/faq">Faq</Link>
         </div>
 
