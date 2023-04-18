@@ -51,7 +51,7 @@ const updateDomainRules = (
     const cookiePolicy = await page.evaluate(() => document.cookiePolicy);
     const privacyPolicy = await page.evaluate(() => document.privacyPolicy);
     console.log(
-      `${url} has ${cookies.length} cookies and uses ${cookiePolicy} cookie policy ${privacyPolicy} `
+      `${url} has ${cookies.length} cookies and uses ${cookiePolicy} cookie policy and has ${privacyPolicy} privacy policy`
     );
     updateDomainRules(domainRules, new URL(url).hostname, cookies, cookiePolicy, privacyPolicy);
   }
