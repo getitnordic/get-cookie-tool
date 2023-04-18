@@ -4,106 +4,25 @@ import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
 import Link from 'next/link';
 /* import { RegexComp } from './components/regexComp'; */
-import React from 'react';
-import fs from 'fs';
-import path from 'path';
+import React, { useState, useEffect } from 'react';
+import WebsiteList from './components/WebsiteList';
+import { fetchPublicSuffixList } from './utils/utils';
 
-/* type Props = {
-  websites: string[],
-};
+export default function Home() {
 
-export const getStaticProps = async (): Promise<{ props: Props }> => {
-  const filePath = path.join(process.cwd(), 'public/assets', 'data.txt');
-  const data = fs.readFileSync(filePath, 'utf-8');
-  const regex = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i;
-  const websites = data
-    .split('\n')
-    .filter((line) => regex.test(line.trim()))
-    .map((line) => line.trim());
+  const [websites, setWebsites] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  return {
-    props: {
-      websites,
-    },
-  };
-}; */
+  useEffect(() => {
+    const getWebsites = async () => {
+      const { data } = await fetchPublicSuffixList();
+      setWebsites(data);
+      setLoading(false);
+    };
 
-type Props = {
-  websites: string[],
-};
+    getWebsites();
+  }, []);
 
-const fetchPublicSuffixList = async (): Promise<string[]> => {
-  const cachedData = localStorage.getItem('publicSuffixList');
-  if (cachedData) {
-    return JSON.parse(cachedData);
-  }
-
-  const response = await fetch('https://publicsuffix.org/list/public_suffix_list.dat');
-  const data = await response.text();
-  const websites = data
-    .split('\n')
-    .filter((line) => !line.startsWith('//') && !line.startsWith('!') && line.trim() !== '')
-    .map((line) => line.trim());
-
-  localStorage.setItem('publicSuffixList', JSON.stringify(websites));
-  return websites;
-};
-
-export const getStaticProps = async (): Promise<{ props: Props }> => {
-  const websites = await fetchPublicSuffixList();
-
-  const filePath = path.join(process.cwd(), 'public/assets', 'data.txt');
-  const data = fs.readFileSync(filePath, 'utf-8');
-  const regex = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i;
-  const filteredWebsites = data
-    .split('\n')
-    .filter((line) => regex.test(line.trim()))
-    .map((line) => line.trim())
-    .filter((website) => {
-      const parts = website.split('.');
-      const domain = parts.slice(-2).join('.');
-      const suffixes = parts.slice(0, -2).concat('').map((_, i, arr) => arr.slice(i).join('.'));
-      return websites.includes(domain) || suffixes.some((suffix) => websites.includes(suffix));
-    });
-
-  return {
-    props: {
-      websites: filteredWebsites,
-    },
-  };
-};
-
-
-/* export const getStaticProps = async () => {
-  const data = fs.readFileSync('public\assets\data.txt', 'utf-8');
-  const websites = data.match(/^[^/].*/ /* gm)?.map((line) => line.trim()) ?? [];
-  return {
-    props: { websites },
-  };
-}; */
-
-/* const IndexPage: React.FC<Props> = ({ websites }) => {
-  return (
-    <div>
-      {websites.map((website, index) => (
-        <div key={index}>{website}</div>
-      ))}
-    </div>
-  );
-}; */
-
-/* export const RegexComp = ({ websites }) => {
-  // Render the websites
-  return (
-    <div>
-      {websites.map((website, index) => (
-        <div key={index}>{website}</div>
-      ))}
-    </div>
-  );
-}; */
-
-export default function Home({ websites }: Props) {
   return (
     <>
       <Head>
@@ -119,16 +38,11 @@ export default function Home({ websites }: Props) {
           <Link href="/faq">Faq</Link>
         </div>
 
-
-
-
         <div id={styles.websiteContainer}>
-          <div>
-            {websites.map((website: any, index: any) => (
-              <div key={index}>{website}</div>
-            ))}
+          <div id={styles.websiteContainer}>
+            <WebsiteList loading={loading} websites={websites} />
           </div>
-        </div> 
+        </div>
       </main>
     </>
   );
