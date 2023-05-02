@@ -1,0 +1,86 @@
+/* :root {
+    --breakpoint-XL: var(--globals-breakpoint-XL);
+  }
+   */
+
+.wholeContainer {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.howToUse {
+    background-color: rgb(186, 186, 186);
+}
+
+.inputForm {
+    background-color: antiquewhite;
+}
+
+.inputSiteAndPath {
+    font-weight: bold;
+}
+
+.myUrl {
+    font-weight: bold;
+}
+
+.result {
+    font-weight: bold;
+}
+
+.resultInput {
+    height: 20em;
+}
+
+
+@media (min-width: var(--breakpoint-S)){
+    /*414px*/
+  
+  }
+  
+  @media (min-width: var(--breakpoint-M)){
+    /*601px*/
+  
+  }
+  
+  @media (min-width: var(--breakpoint-L)){
+    /*1024px*/
+  
+  }
+  
+  @media (min-width: var(--globals-breakpoint-XL)){
+    /*1920px*/
+    .wholeContainer {
+        margin-left: 2%;
+        margin-right: 2%;
+        background-color: red;
+    }
+    
+    .howToUse {
+        
+        background-color: red;
+    }
+    
+    .inputForm {
+        background-color: red;
+    }
+    
+    .inputSiteAndPath {
+        font-weight: bold;
+        background-color: red;
+    }
+    
+    .myUrl {
+        font-weight: bold;
+        background-color: red;
+    }
+    
+    .result {
+        font-weight: bold;
+        background-color: red;
+    }
+    
+    .resultInput {
+        height: 20em;
+    }
+  }

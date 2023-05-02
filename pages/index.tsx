@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 /* styles */
-import styles from '@/styles/Home.module.css';
+import styles from '@/styles/Home.module.scss';
 
 /* utils */
 import { fetchPublicSuffixList } from './utils/utils';
