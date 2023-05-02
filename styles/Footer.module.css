@@ -1,0 +1,60 @@
+.footerName {
+    font-size: 10px;
+}
+.sectionLinks{
+  display: flex;
+}
+.footer {
+  background-color: #f2f2f2;
+  color: #666;
+  margin-top: 2rem;
+  padding: 2rem;
+  bottom: 0;
+  width: 100%;
+}
+.personLinks{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin:auto;
+}
+
+.copyRight{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+
+/* my own css */
+.main {
+    background-color: grey;
+    
+    }
+    
+    .titelH1{
+      display: flex;
+      
+    }
+    
+    @media (min-width: var(--breakpoint-S)){
+      /*414px*/
+    
+    }
+    
+    @media (min-width: var(--breakpoint-M)){
+      /*601px*/
+    
+    }
+    
+    @media (min-width: var(--breakpoint-L)){
+      /*1024px*/
+    
+    }
+    
+    @media (min-width: var(--breakpoint-XL)){
+      /*1920px*/
+    
+    }
