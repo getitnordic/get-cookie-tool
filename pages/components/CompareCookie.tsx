@@ -3,6 +3,16 @@ import styles from "/styles/CompareCookies.module.css"
 
 export const CompareCookie = () => {
   
+  
+  
+  const [selectSameSite, setSelectSameSite] = useState('');
+  
+
+  const sameSiteChange = (event) => {
+    setSelectSameSite(event.target.value);
+  }
+
+  
 
   return (
     <div className={styles.wholeContainer}>
@@ -23,19 +33,12 @@ export const CompareCookie = () => {
         <label htmlFor="path">Path</label>
         <input type="text" id="path" name="path"></input>
         <br></br>
-
-        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></input>
-        <label htmlFor="vehicle1"> HttpOnly</label>
-        <br></br>
-        <input type="checkbox" id="vehicle2" name="vehicle2" value="Car"></input>
-        <label htmlFor="vehicle2"> Secure</label>
-        <br></br>
+        
         <label htmlFor="samesite">SameSite:</label>
-        <select id="samesite" name="samesite">
+        <select id="samesite" value={selectSameSite} onChange={sameSiteChange}>
         <option value="none">None</option>
         <option value="lax">Lax</option>
-        <option value="pax">Pax</option>
-        <option value="stict">Strict</option>
+        <option value="strict">Strict</option>
         </select>
         </div>
 
@@ -43,10 +46,18 @@ export const CompareCookie = () => {
         <label htmlFor="myUrl">My Url:</label>
         <input type="text" id="myUrl" name="myUrl"></input>
         </div>
-
+        <button type="submit">Show</button>
         <div className={styles.result}> 
         <label htmlFor="result">Result:</label>
-        <textarea className={styles.resultInput} id="result" name="result"></textarea>
+        <div className={styles.textResult}>
+              <div className={styles.sameSiteResult}>
+                {selectSameSite === 'none' && <p>This is the default behavior for cookies, and it means that the cookie can be sent with both same-site and cross-site requests.</p>}
+                {selectSameSite === 'lax' && <p>This value is similar to Strict, but with a few exceptions. Lax allows some cross-site requests to include the cookie, but only if they are "safe" requests, such as clicking a link or loading an image. POST requests, for example, would not include the cookie. </p>}
+                {selectSameSite === 'strict' && <p>This value instructs the browser to only send the cookie with same-site requests. Cross-site requests will not include the cookie.</p>}
+
+              </div>
+
+        </div>
         </div>
         </form>
     </div>

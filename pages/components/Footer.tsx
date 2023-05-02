@@ -25,13 +25,13 @@ const Footer = () => {
                 <Link href="https://github.com/joarwar" >
                   <FontAwesomeIcon
                       icon={faGithub}
-                      style={{ fontSize: 20, color: "grey" }}
+                      style={{ fontSize: 20, color: "black" }}
                   />
               </Link>
               <Link href="https://www.linkedin.com/in/joargunnarwarholm/" >
                       <FontAwesomeIcon
                           icon={faLinkedin}
-                          style={{ fontSize: 20, color: "grey" }}
+                          style={{ fontSize: 20, color: "lightblue" }}
                       />
                   </Link>
               </div>
@@ -40,13 +40,13 @@ const Footer = () => {
                   <Link href="https://github.com/Samrad84" >
                       <FontAwesomeIcon
                           icon={faGithub}
-                          style={{ fontSize: 20, color: "grey" }}
+                          style={{ fontSize: 20, color: "black" }}
                       />
                   </Link>
                   <Link href="https://www.linkedin.com/in/sam-faravahar/" >
                       <FontAwesomeIcon
                           icon={faLinkedin}
-                          style={{ fontSize: 20, color: "grey" }}
+                          style={{ fontSize: 20, color: "lightblue" }}
                       />
                   </Link>
               </div>
@@ -55,13 +55,13 @@ const Footer = () => {
                   <Link href="https://github.com/PhilipRydqvist" >
                       <FontAwesomeIcon
                           icon={faGithub}
-                          style={{ fontSize: 20, color: "grey" }}
+                          style={{ fontSize: 20, color: "black" }}
                       />
                   </Link>
                   <Link href="https://www.linkedin.com/in/philip-rydqvist/" >
                       <FontAwesomeIcon
                           icon={faLinkedin}
-                          style={{ fontSize: 20, color: "grey" }}
+                          style={{ fontSize: 20, color: "lightblue" }}
                       />
                   </Link>
               </div>
