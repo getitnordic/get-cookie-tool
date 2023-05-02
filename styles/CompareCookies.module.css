@@ -7,22 +7,37 @@
     background-color: rgb(186, 186, 186);
 }
 
-.inputForm {
-    background-color: antiquewhite;
-}
 
 .inputSiteAndPath {
     font-weight: bold;
-}
+    display: flex;
+    background-color: lightblue;
 
-.myUrl {
-    font-weight: bold;
+    
+}
+.inputSiteAndPath input{
+    max-width: 200px;
+    margin: 10px;
+}
+.inputSiteAndPath select{
+    max-width: 190px;
+    margin: 10px;
+}
+.myUrl{
+    max-width: 200px;
+    margin: 10px;
+
+}
+.selectAndCheck{
+    display: flex;
+    flex-direction: column;
 }
 
 .result {
-    font-weight: bold;
+    background-color: lightcoral;
+    
 }
 
-.resultInput {
-    height: 20em;
+.settingsTitle{
+    text-align: center;
 }
