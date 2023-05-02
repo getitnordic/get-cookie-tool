@@ -47,13 +47,13 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.titelContainer}> 
         <h1 className={styles.titelH1}> Get Cookies
-          <Link href="https://github.com/getitnordic/get-cookie-tool" >
+        </h1>
+        <h2><Link href="https://github.com/getitnordic/get-cookie-tool" >
             <FontAwesomeIcon
               icon={faGithub}
               style={{ fontSize: 30, color: "grey" }}
             />
-          </Link>
-        </h1>
+          </Link></h2>
         </div>
         
         < CompareCookie />
