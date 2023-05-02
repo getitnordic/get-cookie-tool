@@ -1,26 +1,27 @@
-// add bootstrap css 
-import 'bootstrap/dist/css/bootstrap.css'
+// add bootstrap css
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // own css files here
-import '@/styles/globals.css'
+import '@/styles/globals.scss';
 
-import "@fortawesome/fontawesome-svg-core/styles.css"; 
+// add Font Awesome CSS
+import '@fortawesome/fontawesome-free/css/all.css';
 
-import { config } from "@fortawesome/fontawesome-svg-core";
-// Tell Font Awesome to skip adding the CSS automatically 
-// since it's already imported above
-config.autoAddCss = false; 
+// add Font Awesome core styles (skip automatic CSS injection)
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 
-import Head from "next/head";
-import type { AppProps } from 'next/app'
+import Head from 'next/head';
+import type { AppProps } from 'next/app';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-    <Head>
-       <meta name="viewport" content="width=device-width, initial-scale=1" />
-    </Head>
-  <Component {...pageProps} />
-  </>
-);
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <Component {...pageProps} />
+    </>
+  );
 }

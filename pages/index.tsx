@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 /* styles */
-import styles from '@/styles/Home.module.css';
+import styles from '@/styles/Home.module.scss';
 
 /* utils */
 import { fetchPublicSuffixList } from './utils/utils';
@@ -48,7 +48,7 @@ export default function Home() {
         <div className={styles.titelContainer}> 
         <h1 className={styles.titelH1}> Get Cookies
         </h1>
-        <h2><Link href="https://github.com/getitnordic/get-cookie-tool" >
+        <h2 className={styles.githubLogo}><Link href="https://github.com/getitnordic/get-cookie-tool" >
             <FontAwesomeIcon
               icon={faGithub}
               style={{ fontSize: 30, color: "grey" }}

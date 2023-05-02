@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from "/styles/CompareCookies.module.css"
+import styles from '/styles/CompareCookies.module.scss';
 
 export const CompareCookie = () => {
   const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
