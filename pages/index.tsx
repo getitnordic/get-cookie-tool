@@ -20,6 +20,7 @@ import WebsiteList from './components/WebsiteList';
 import { CompareCookie } from './components/CompareCookie';
 import FAQ from './components/FAQ';
 import CookiesInfo from './components/CookiesInfo';
+import CronPage from './cron';
 export default function Home() {
 
   const [websites, setWebsites] = useState<string[]>([]);
@@ -57,7 +58,7 @@ export default function Home() {
         </div>
         
         < CompareCookie />
-        
+        < CronPage />
 
         {/* <div id={styles.websiteContainer}>
           <div id={styles.websiteContainer}>
