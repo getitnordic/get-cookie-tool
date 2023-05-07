@@ -14,11 +14,13 @@ const saveSitesToDatabase = async () => {
   // Retrieve the data from the publicsuffixlist API
   const response = await axios.get<string>('https://publicsuffix.org/list/public_suffix_list.dat');
 
+
   // Parse the data and create an array of objects to insert into the database
   const sites = response.data
-    .split('\n')
-    .filter((line) => !line.startsWith('//'))
-    .map((line) => ({ website: line.trim() }));
+  .split('\n')
+  .filter((line: string) => !line.startsWith('//'))
+  .map((line: string) => ({ website: line.trim() }));
+
 
   // Create the collection if it doesn't exist
   await db.createCollection('sites');
@@ -37,9 +39,9 @@ const handler: NextApiHandler = async (req, res) => {
     await saveSitesToDatabase();
     res.status(200).json({ message: 'Sites successfully saved to the database' });
   } catch (error) {
-  console.error(error);
-  res.status(500).json({ message: 'Error saving sites to database' });
+    console.error(error);
+    res.status(500).json({ message: 'Error saving sites to database' });
   }
-  };
-  
-  export default handler;
+};
+
+export default handler;

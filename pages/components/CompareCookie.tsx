@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from '/styles/CompareCookies.module.scss';
 
 export const CompareCookie = () => {
+const [websitesMongo, setWebsitesMongo] = useState<string[]>([]);
+
   const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -22,7 +24,27 @@ export const CompareCookie = () => {
     setInputValue(event.target.value);
   };
 
-
+  useEffect(() => {
+    const getWebsites = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/getData",
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        const data = await response.json();
+        setWebsitesMongo(data);
+      } catch (err) {
+        console.log("error i mongofetch eventid", err);
+      }
+    };
+    getWebsites()
+    console.log(websitesMongo)
+  }, []);
   
 
   return (
