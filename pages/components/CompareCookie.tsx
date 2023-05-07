@@ -42,10 +42,9 @@ const [websitesMongo, setWebsitesMongo] = useState<string[]>([]);
         console.log("error i mongofetch eventid", err);
       }
     };
-    getWebsites()
-    console.log(websitesMongo)
+    getWebsites() 
   }, []);
-  
+  console.log(websitesMongo)
 
   return (
     <div className={styles.wholeContainer}>
