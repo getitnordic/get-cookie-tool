@@ -3,8 +3,13 @@ import styles from '/styles/CompareCookies.module.scss';
 
 export const CompareCookie = () => {
 const [websitesMongo, setWebsitesMongo] = useState<string[]>([]);
+const [inputValueDomain, setInputValueDomain] = useState("");
+const [inputUrl, setInputUrl] = useState('');
 
-  const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
+const [inputValue, setInputValue] = useState('');
+const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
+const [selectSameSite, setSelectSameSite] = useState<string>('');
+
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const updatedSelectedCheckboxes = selectedCheckboxes.includes(value)
@@ -13,12 +18,9 @@ const [websitesMongo, setWebsitesMongo] = useState<string[]>([]);
     setSelectedCheckboxes(updatedSelectedCheckboxes);
   };
 
-  const [selectSameSite, setSelectSameSite] = useState<string>('');
   const sameSiteChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectSameSite(event.target.value);
   };
-
-  const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -46,29 +48,55 @@ const [websitesMongo, setWebsitesMongo] = useState<string[]>([]);
   }, []);
   console.log(websitesMongo)
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueDomain(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const matchingSite = websitesMongo.find(site => site.website === inputValueDomain);
+    if (matchingSite) {
+      console.log('Input value matches website:', matchingSite.website);
+    } else {
+      console.log('Input value does not match any website');
+    }
+  };
+
   return (
     <div className={styles.wholeContainer}>
+      <div className={styles.usageIndex}>
+        <h2>How it works</h2>
+        <p>This website gives you an easy way to check interactions between your URL and different domains, using cookie attributes.</p>
+
+      </div>
       <div className={styles.howToUse}>
         <h2>How to Use</h2>
-        <p> Input a website with or without "http/https" as prefix. You can also include prefix example: ".com". Then input a path for example /documents. </p>
-        <p> Then input a path for example /documents. </p>
-        <p> Input your website that which you want to compare.</p>
+        <p>
+           Enter the domain and TLD (if there is any) you want to check, e.g. "top.example.com". 
+          <br></br>
+          Add any relevant subdirectories (paths), e.g. "/blog".
+          <br></br>
+          Choose attributes that match your website, e.g. "httpOnly".
+          <br></br>
+          Then input your full URL to compare. e.g. "https://comparewebsite.com".
+        </p>
       </div>
 
       <div className={styles.wholeCookie}>
 
         <form >
-          <h3 className={styles.settingsTitle}> Cookie Settings</h3>
+          <h3 className={styles.settingsTitle}>  </h3>
           <div className={styles.inputSiteAndPath}>
-            <div>
-              <div>
-                <input type="text" id="domain" name="domain" placeholder='Domain'></input>
+            <div className={styles.domainAndPath}>
+              <div >
+                <input type="text" id="domain" name="domain" onChange={handleChange} placeholder='Domain'></input>
               </div>
               <div>
                 <input type="text" id="path" value={inputValue} onChange={handleInputChange} placeholder="Path" />
               </div>
             </div>
             <div className={styles.selectAndCheck}>
+              <h5 className={styles.attributesTitle}> Attributes:</h5>
               <select id="samesite" value={selectSameSite} onChange={sameSiteChange}>
                 <option value="choose">--SameSite--</option>
                 <option value="none">None</option>

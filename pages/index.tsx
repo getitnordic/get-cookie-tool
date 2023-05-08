@@ -23,10 +23,10 @@ import CookiesInfo from './components/CookiesInfo';
 import CronPage from './cron';
 export default function Home() {
 
-  const [websites, setWebsites] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+/*   const [websites, setWebsites] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true); */
 
-  useEffect(() => {
+/*   useEffect(() => {
     const getWebsites = async () => {
       const { data } = await fetchPublicSuffixList();
       setWebsites(data);
@@ -34,7 +34,7 @@ export default function Home() {
     };
 
     getWebsites();
-  }, []);
+  }, []); */
 
   return (
     <>

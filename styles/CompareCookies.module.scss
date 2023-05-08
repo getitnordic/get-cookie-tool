@@ -6,7 +6,10 @@
 .howToUse {
     background-color: rgb(186, 186, 186);
 }
-
+.domainAndPath{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 .inputSiteAndPath {
     font-weight: bold;
@@ -22,6 +25,10 @@
 .inputSiteAndPath select{
     max-width: 190px;
     margin: 10px;
+}
+.attributesTitle{
+   font-size: 17px;
+   margin-left: 12px;
 }
 .myUrl{
     max-width: 200px;

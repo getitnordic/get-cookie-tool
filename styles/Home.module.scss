@@ -4,9 +4,19 @@
 /* my own css */
 .main {
 background-color: white;
+@include respond-to("s") {
+  background-color: red;
+}
+@include respond-to("m") {
+  background-color: red;
+}
+@include respond-to("l") {
+  background-color: red;
+}
 @include respond-to("xl") {
   background-color: red;
 }
+
 }
 .titelContainer {
  

@@ -13,7 +13,7 @@ export async function getStaticProps() {
 export default function CronPage() {
   return (
     <div>
-      <p>Fetch job running...</p>
+      {/* <p>Fetch job running...</p> */}
     </div>
   );
 }
