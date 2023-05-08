@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styles from '/styles/CompareCookies.module.scss';
 
+interface Site {
+  website: string;
+}
+
 export const CompareCookie = () => {
-const [websitesMongo, setWebsitesMongo] = useState<string[]>([]);
+const [websitesMongo, setWebsitesMongo] = useState<Site[]>([]);
 const [inputValueDomain, setInputValueDomain] = useState("");
-const [inputUrl, setInputUrl] = useState('');
+const [inputValueUrl, setInputValueUrl] = useState('');
 
 const [inputValue, setInputValue] = useState('');
 const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
@@ -48,18 +52,20 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
   }, []);
   console.log(websitesMongo)
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+ /*  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValueDomain(event.target.value);
-  };
+  }; */
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const matchingSite = websitesMongo.find(site => site.website === inputValueDomain);
+  
+  const handleDomainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const input = event.target.value.trim().toLowerCase();
+    const matchingSite = websitesMongo.find(site => site.website === input);
     if (matchingSite) {
       console.log('Input value matches website:', matchingSite.website);
     } else {
       console.log('Input value does not match any website');
     }
+    setInputValueDomain(input);
   };
 
   return (
@@ -89,10 +95,10 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
           <div className={styles.inputSiteAndPath}>
             <div className={styles.domainAndPath}>
               <div >
-                <input type="text" id="domain" name="domain" onChange={handleChange} placeholder='Domain'></input>
+              <input type="text" id="domain" name="domain" value={inputValueDomain} onChange={handleDomainChange} placeholder='Domain'></input>
               </div>
               <div>
-                <input type="text" id="path" value={inputValue} onChange={handleInputChange} placeholder="Path" />
+                <input type="text" id="path"  onChange={handleDomainChange} placeholder="Path" />
               </div>
             </div>
             <div className={styles.selectAndCheck}>

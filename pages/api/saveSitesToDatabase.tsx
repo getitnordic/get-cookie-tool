@@ -17,11 +17,13 @@ const saveSitesToDatabase = async () => {
 
   // Parse the data and create an array of objects to insert into the database
   const sites = response.data
-  .split('\n')
+  /* .split('\n')
   .filter((line: string) => !line.startsWith('//'))
-  .map((line: string) => ({ website: line.trim() }));
-
-
+  .map((line: string) => ({ website: line.trim() })); */
+  .split('\n')
+    .filter((line: string) => !line.startsWith('//') && !line.startsWith('!') && line.trim() !== '')
+    .map((line: string) => line.trim());
+    
   // Create the collection if it doesn't exist
   await db.createCollection('sites');
 
