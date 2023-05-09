@@ -1,22 +1,48 @@
+@import "../styles/Breakpoints.module.scss";
 .footerName {
     font-size: 10px;
+    @include respond-to("s") {
+
+    }
+    @include respond-to("m") {
+        font-size: 15px;
+    
+    }
+    @include respond-to("l") {
+      font-size: 20px;
+    }
+    @include respond-to("xl") {
+    
+    }
 }
 .sectionLinks{
   display: flex;
 }
 .footer {
-  background-color: #f2f2f2;
-  color: #666;
-  margin-top: 2rem;
+  background-color: #FCF0E2;
+  color: black;
   padding: 2rem;
   bottom: 0;
   width: 100%;
+
 }
 .personLinks{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin:auto;
+  margin:auto; 
+  @include respond-to("s") {
+    margin:auto; 
+  }
+  @include respond-to("m") {
+    margin:auto; 
+  }
+  @include respond-to("l") {
+    
+  }
+  @include respond-to("xl") {
+  
+  }
 }
 
 .copyRight{
@@ -25,36 +51,78 @@
   align-items: center;
   margin: auto;
   margin-top: 1rem;
+  font-weight: bolder;
+  @include respond-to("s") {
+
+  }
+
+  @include respond-to("l") {
+    font-size: 25px;
+  }
+  @include respond-to("xl") {
+  
+  }
+}
+.githubLogo{
+  color: grey;
+  font-size: 20px;
+  @include respond-to("s") {
+
+  }
+  @include respond-to("m") {
+    font-size: 30px;
+  }
+  @include respond-to("l") {
+    font-size: 40px;
+  }
+  @include respond-to("xl") {
+  
+  }
+
+}
+.linkedInLogo{
+  color: lightblue;
+  font-size: 20px;
+  @include respond-to("s") {
+
+  }
+  @include respond-to("m") {
+    font-size: 30px;
+
+  }
+  @include respond-to("l") {
+    font-size: 40px;
+    margin-top:5px;
+  }
+  @include respond-to("xl") {
+  
+  }
+
+}
+.githubLogoRepo{
+  color: grey;
+  font-size: 20px;
+  @include respond-to("s") {
+
+  }
+  @include respond-to("m") {
+    font-size: 30px;
+  }
+  @include respond-to("l") {
+    font-size: 50px;
+  }
+  @include respond-to("xl") {
+  
+  }
+
 }
 
 
 /* my own css */
 .main {
-    background-color: grey;
+  background-color: #FAE0B2;
+
+}
     
-    }
     
-    .titelH1{
-      display: flex;
-      
-    }
-    
-    @media (min-width: var(--breakpoint-S)){
-      /*414px*/
-    
-    }
-    
-    @media (min-width: var(--breakpoint-M)){
-      /*601px*/
-    
-    }
-    
-    @media (min-width: var(--breakpoint-L)){
-      /*1024px*/
-    
-    }
-    
-    @media (min-width: var(--breakpoint-XL)){
-      /*1920px*/
-    
-    }
+  

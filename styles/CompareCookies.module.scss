@@ -1,26 +1,77 @@
+@import "../styles/Breakpoints.module.scss";
 .wholeContainer {
     margin-left: 2%;
     margin-right: 2%;
+
+}
+.cookiePic img{
+    display:none;
+    @include respond-to("m") {
+    
+    }
+    @include respond-to("l") {
+        margin-top:2rem;
+        margin-left: 5rem;
+        display: block; /* Show the larger image */
+        max-width: 100%;
+        height: 70%;
+    }
+    @include respond-to("xl") {
+        margin-top: 0rem;
+        margin-left: 40rem;
+        display: block; /* Show the larger image */
+        max-width: 100%;
+        height: 90%;
+        
+    
+    }
+
+}
+.useAndCookie{
+    display:flex
 }
 
-.howToUse {
-    background-color: rgb(186, 186, 186);
-}
-.domainAndPath{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+
 
 .inputSiteAndPath {
     font-weight: bold;
     display: flex;
-    background-color: lightblue;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-style: ridge;
+    @include respond-to("s") {
 
+    }
+    @include respond-to("m") {
+        justify-content: center;
+    
+    }
+    @include respond-to("l") {
+    }
+    @include respond-to("xl") {
+        border: none;
+        justify-content: start;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
     
 }
+
 .inputSiteAndPath input{
     max-width: 200px;
     margin: 10px;
+    @include respond-to("s") {
+
+    }
+    @include respond-to("m") {
+
+    
+    }
+    @include respond-to("l") {
+    }
+    @include respond-to("xl") {
+    
+    }
 }
 .inputSiteAndPath select{
     max-width: 190px;
@@ -28,23 +79,49 @@
 }
 .attributesTitle{
    font-size: 17px;
-   margin-left: 12px;
+   text-align: center;
+   @include respond-to("s") {
+
+   }
+   @include respond-to("m") {
+       justify-content: center;
+   
+   }
+   @include respond-to("l") {
+   }
+   @include respond-to("xl") {
+       text-align:  start;
+       font-size: 25px;
+   }
 }
 .myUrl{
-    max-width: 200px;
+    display: flex;
     margin: 10px;
+    justify-content: center;
+    @include respond-to("xl") {
+        justify-content:  start;
+    }
 
 }
 .selectAndCheck{
     display: flex;
     flex-direction: column;
+
 }
 
 .result {
-    background-color: lightcoral;
+    border-top: 1px black solid;
+    border-width: 3px;
+    padding-top: 10px;
     
 }
+.resultTitle{
+    padding-top: 10px;
+    font-weight:bold;
+}
 
-.settingsTitle{
-    text-align: center;
+
+.checkBoxResult{
+    border-bottom: 1px solid black;
+    border-width: 3px;
 }
