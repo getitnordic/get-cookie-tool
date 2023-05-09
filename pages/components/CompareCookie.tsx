@@ -125,7 +125,11 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
               </label>
             </div>
           </div>
+          
         </div>
+        <div className={styles.myUrl}>
+            <input type="text" id="myUrl" name="myUrl" placeholder='My Url'></input>
+          </div>
 
           <div className={styles.wholeCookie}>
 
