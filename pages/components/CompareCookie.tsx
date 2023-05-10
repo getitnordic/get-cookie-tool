@@ -6,10 +6,6 @@ interface Site {
 }
 
 export const CompareCookie = () => {
-const [websitesMongo, setWebsitesMongo] = useState<Site[]>([]);
-const [inputValueDomain, setInputValueDomain] = useState("");
-const [inputValueUrl, setInputValueUrl] = useState('');
-
 const [inputValue, setInputValue] = useState('');
 const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
 const [selectSameSite, setSelectSameSite] = useState<string>('');
@@ -29,6 +25,10 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
+
+  const [websitesMongo, setWebsitesMongo] = useState<Site[]>([]);
+const [inputValueDomain, setInputValueDomain] = useState("");
+const [inputValueUrl, setInputValueUrl] = useState('');
 
   useEffect(() => {
     const getWebsites = async () => {
@@ -51,11 +51,6 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
     getWebsites() 
   }, []);
   console.log(websitesMongo)
-
- /*  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValueDomain(event.target.value);
-  }; */
-
   
   const handleDomainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value.trim().toLowerCase();
