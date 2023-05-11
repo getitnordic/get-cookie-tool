@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '/styles/CompareCookies.module.scss';
 import { Domain } from '../api/interfaces/Domain';
+import Link from 'next/link';
 
 export const CompareCookie = () => {
 const [inputValue, setInputValue] = useState('');
@@ -8,6 +9,11 @@ const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
 const [selectSameSite, setSelectSameSite] = useState<string>('');
 const [inputValueDomain, setInputValueDomain] = useState("");
 const [inputValueUrl, setInputValueUrl] = useState('');
+const [inputValueUrlCheck, setInputValueUrlCheck] = useState('');
+
+
+const [matchingDomain, setMatchingDomain] = useState('');
+
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -24,6 +30,19 @@ const [inputValueUrl, setInputValueUrl] = useState('');
   const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
+  const handleMyUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueUrlCheck(event.target.value);
+
+  };
+  const checkMyUrlChange = () => {
+    if (inputValueUrl.includes('http') || inputValueUrl.includes('https')) {
+      console.log('The input includes "http" or "https".');
+      // Perform additional actions if the input includes "http" or "https"
+    } else {
+      console.log('The input does not include "http" or "https".');
+      // Perform alternative actions if the input does not include "http" or "https"
+    }
+  }
   
   useEffect(() => {
     const getSitesFromDatabase = async () => {
@@ -61,8 +80,12 @@ const [inputValueUrl, setInputValueUrl] = useState('');
   
       if (matchingSite) {
         console.log('Input value matches website:', matchingSite.domains);
+        setMatchingDomain(matchingSite.domains);
+        
+
       } else {
         console.log('Input value does not match any website');
+        setMatchingDomain('');
       }
     } else {
       console.log('Error in stored domains');
@@ -132,7 +155,7 @@ const [inputValueUrl, setInputValueUrl] = useState('');
 
         </div>
         <div className={styles.myUrl}>
-            <input type="text" id="myUrl" name="myUrl" placeholder='My Url'></input>
+            <input type="text" id="myUrl" name="myUrl" placeholder='My Url' onChange={checkMyUrlChange}></input>
           </div>
 
 
@@ -141,6 +164,16 @@ const [inputValueUrl, setInputValueUrl] = useState('');
             <div className={styles.result}>
               <h5 className={styles.resultTitle}> Result:</h5>
               <div className={styles.textResult}>
+              <div className={styles.publicListResult}>
+                  {matchingDomain !== '' && <p><strong>Domain:</strong> The <strong>{matchingDomain}</strong> domain exists on <a  href="https://publicsuffix.org/list/public_suffix_list.dat "  ><strong>Public suffix list</strong></a> meaning that it won't be able to interact with other domains. Read more about this <a href="https://publicsuffix.org/learn/ "><strong>here.</strong></a></p>}
+                  {matchingDomain === '' && <p></p>}
+                </div>
+                <div className={styles.myUrlResult}>
+                  {inputValueUrl !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrl</p>}
+                  {inputValueUrlCheck !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrlCheck</p>}
+                  {inputValueUrl === '' && <p>Empty</p>}
+                  {inputValueUrlCheck === '' && <p>Empty Check </p>}
+                </div>
                 <div className={styles.pathResult}>
                   {inputValue === '' && <p> <strong>Path:</strong> If a cookie does not have a "Path" attribute set, it is generally available to the entire domain that set the cookie.</p>}
                   {inputValue !== '' && <p> <strong>Path:</strong> "Path" attribute is set to {inputValue}, which means that the cookie will only be sent to the server with requests that are made to the  {inputValue} directory.</p>}
