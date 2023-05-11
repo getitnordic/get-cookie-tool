@@ -20,12 +20,13 @@ import WebsiteList from './components/WebsiteList';
 import { CompareCookie } from './components/CompareCookie';
 import FAQ from './components/FAQ';
 import CookiesInfo from './components/CookiesInfo';
+import CronPage from './cron';
 export default function Home() {
 
-  const [websites, setWebsites] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+/*   const [websites, setWebsites] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true); */
 
-  useEffect(() => {
+/*   useEffect(() => {
     const getWebsites = async () => {
       const { data } = await fetchPublicSuffixList();
       setWebsites(data);
@@ -33,7 +34,7 @@ export default function Home() {
     };
 
     getWebsites();
-  }, []);
+  }, []); */
 
   return (
     <>
@@ -57,7 +58,7 @@ export default function Home() {
         </div>
         
         < CompareCookie />
-        
+        < CronPage />
 
         {/* <div id={styles.websiteContainer}>
           <div id={styles.websiteContainer}>

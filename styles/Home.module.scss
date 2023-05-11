@@ -3,9 +3,17 @@
 
 /* my own css */
 .main {
-background-color: white;
+background-color: #FCF0E2;
+@include respond-to("s") {
+
+}
+@include respond-to("m") {
+
+}
+@include respond-to("l") {
+}
 @include respond-to("xl") {
-  background-color: red;
+
 }
 }
 .titelContainer {
@@ -40,18 +48,17 @@ background-color: white;
 @media (min-width: var(--breakpoint-XL)){
   /*1920px*/
   .main {
-    background-color: red;
+
     
     }
     .titelContainer {
-      background-color: red;
+
       margin-bottom: 5%;
     }
     
     .titelH1{
       font-weight: bold;
       text-align: center;
-      background-color: red;
     }
 }
 

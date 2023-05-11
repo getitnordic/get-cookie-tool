@@ -1,8 +1,190 @@
+@import "../styles/Breakpoints.module.scss";
 .faqSection {
     margin-left: 2%;
     margin-right: 2%;
+
+    @include respond-to("s") {}
+
+    @include respond-to("m") {}
+
+    @include respond-to("l") {
+        display: grid;
+        grid-template-columns: 400px 400px ;
+        grid-template-rows: 200px 200px ;
+        align-items: center;
+        justify-content: space-evenly;
+        
+        
+    }
+
+    @include respond-to("xl") {}
+
 }
 .faqTitle{
     font-weight: bold;
     margin-bottom: 1rem;
+    @include respond-to("s") {
+
+    }
+    @include respond-to("m") {
+        text-align: center;
+    }
+    @include respond-to("l") {
+    }
+    @include respond-to("xl") {
+    
+    }
+}
+
+.faq1{
+
+    @include respond-to("l") {
+        text-align: center;
+        font-size: larger;
+
+    }
+    @include respond-to("xl") {
+    
+    }
+   
+}
+.faq2{
+
+    @include respond-to("l") {
+        text-align: center;
+        font-size: larger;
+
+    }
+    @include respond-to("xl") {
+    
+    }
+   
+}
+
+.faq3{
+
+    @include respond-to("l") {
+        text-align: center;
+        font-size: larger;
+        
+
+    }
+    @include respond-to("xl") {
+    
+    }
+   
+}
+
+.faq4{
+
+    @include respond-to("l") {
+        text-align: center;
+        font-size: larger;
+
+    }
+    @include respond-to("xl") {
+    
+    }
+   
+}
+
+.faq5{
+
+    @include respond-to("l") {
+        text-align: center;
+        font-size: larger;
+    }
+    @include respond-to("xl") {
+    
+    }
+   
+}
+
+.faq6{
+
+    @include respond-to("l") {
+        text-align: center;
+        font-size: larger;
+
+    }
+    @include respond-to("xl") {
+    
+    }
+    margin-bottom: -2rem;
+}
+
+.faqMiniTitle1{
+    @include respond-to("l") {
+        font-size: 20px;
+        margin-top: -1.9rem;
+
+
+
+    }
+    @include respond-to("xl") {
+    }
+
+}
+.faqMiniTitle2{
+    @include respond-to("l") {
+        font-size: 20px;
+    
+
+    }
+    @include respond-to("xl") {
+    }
+
+}
+.faqMiniTitle3{
+    @include respond-to("l") {
+        font-size: 20px;
+
+
+    }
+    @include respond-to("xl") {
+    }
+
+}
+.faqMiniTitle4{
+    @include respond-to("l") {
+        font-size: 20px;
+        margin-top: -1.8rem;
+
+
+    }
+    @include respond-to("xl") {
+    }
+
+}
+.faqMiniTitle5{
+    @include respond-to("l") {
+        font-size: 20px;
+
+
+    }
+    @include respond-to("xl") {
+    }
+
+}
+.faqMiniTitle6{
+    @include respond-to("l") {
+        font-size: 20px;
+        margin-top: -3.8rem;
+  
+        
+
+    }
+    @include respond-to("xl") {
+    }
+
+}
+
+.faqMiniText{
+    @include respond-to("l") {
+        
+
+    }
+    @include respond-to("xl") {
+    }
+
 }
