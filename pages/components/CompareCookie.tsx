@@ -115,17 +115,23 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
               <option value="strict">Strict</option>
             </select>
             <div className={styles.checkBox}>
-              <label>
-                <input type="checkbox" value="HttpOnly" onChange={handleCheckboxChange} />
-                HttpOnly
-              </label>
-              <label>
-                <input type="checkbox" value="Secure" onChange={handleCheckboxChange} />
-                Secure
-              </label>
+              <div className={styles.checkBox1} >    
+              <input className={styles.checkBoxPress} type="checkbox" value="HttpOnly" onChange={handleCheckboxChange} />
+                <p className={styles.checkBoxText1}>HttpOnly</p>
+              </div>
+              
+              <div className={styles.checkBox2}>
+              <input className={styles.checkBoxPress} type="checkbox" value="Secure" onChange={handleCheckboxChange} />
+                <p className={styles.checkBoxText2}>Secure</p>
+              </div>
             </div>
           </div>
+
         </div>
+        <div className={styles.myUrl}>
+            <input type="text" id="myUrl" name="myUrl" placeholder='My Url'></input>
+          </div>
+
 
           <div className={styles.wholeCookie}>
 

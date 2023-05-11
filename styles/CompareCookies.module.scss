@@ -1,4 +1,5 @@
 @import "../styles/Breakpoints.module.scss";
+
 .wholeContainer {
     margin-left: 2%;
     margin-right: 2%;
@@ -68,6 +69,10 @@
     
     }
     @include respond-to("l") {
+        width: 100%;
+        padding: 6px 16px;
+        box-sizing: border-box;
+        font-size: 15px;
     }
     @include respond-to("xl") {
     
@@ -76,6 +81,13 @@
 .inputSiteAndPath select{
     max-width: 190px;
     margin: 10px;
+    @include respond-to("l") {
+        width: 100%;
+        padding: 8px 16px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        
+    }
 }
 .attributesTitle{
    font-size: 17px;
@@ -98,17 +110,65 @@
     display: flex;
     margin: 10px;
     justify-content: center;
+    @include respond-to("l") {
+        width: 100%;
+        padding: 12px 16px;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
     @include respond-to("xl") {
         justify-content:  start;
     }
+}
+.myUrl input{
+    @include respond-to("l") {
+        width: 25%;
+        padding: 8px 16px;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+    @include respond-to("l") {
+        margin-left: -14px;
+        width: auto;
+    }
+}
+
+.checkBox1{
+    display: flex;
+    margin-top: -15px;
+
+
+
+}
+.checkBox2{
+    display: flex;
+    margin-top: -15px;
+
+}
+
+.checkBoxText1{
+    font-size: 11px;
+    margin-top:12px;
+
+    
+
+}
+.checkBoxText2{
+    font-size: 12px;
+    margin-top: 12px;
+    @include respond-to("l") {
+        margin-right:10px;
+
+    }
+
 
 }
 .selectAndCheck{
     display: flex;
     flex-direction: column;
+    max-height: 200px;
 
 }
-
 .result {
     border-top: 1px black solid;
     border-width: 3px;
