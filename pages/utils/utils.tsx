@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+/* import { useEffect, useState } from 'react';
 
 interface PublicSuffixList {
   data: string[];
@@ -28,9 +28,9 @@ export const fetchPublicSuffixList = async (): Promise<PublicSuffixList> => {
   const websites = data
     .split('\n')
     .filter((line) => !line.startsWith('//') && !line.startsWith('!') && line.trim() !== '')
-    .map((line) => line.trim());
+    .map((line) => line.trim()); */
   /* .filter((line) => !line.startsWith('//') && !line.startsWith('!') && line.endsWith('.xx') && line.trim() !== '') */
-
+/* 
   localStorage.setItem('publicSuffixList', JSON.stringify(websites));
   localStorage.setItem('publicSuffixListEtag', etag || '');
 
@@ -39,3 +39,4 @@ export const fetchPublicSuffixList = async (): Promise<PublicSuffixList> => {
     etag: etag || '',
   };
 };
+ */

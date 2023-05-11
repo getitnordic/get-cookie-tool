@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from '/styles/CompareCookies.module.scss';
-
-interface Site {
-  website: string;
-}
+import { Domain } from '../api/interfaces/Domain';
 
 export const CompareCookie = () => {
-const [websitesMongo, setWebsitesMongo] = useState<Site[]>([]);
-const [inputValueDomain, setInputValueDomain] = useState("");
-const [inputValueUrl, setInputValueUrl] = useState('');
-
 const [inputValue, setInputValue] = useState('');
 const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
 const [selectSameSite, setSelectSameSite] = useState<string>('');
+const [inputValueDomain, setInputValueDomain] = useState("");
+const [inputValueUrl, setInputValueUrl] = useState('');
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -26,12 +21,12 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
     setSelectSameSite(event.target.value);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-
+  
   useEffect(() => {
-    const getWebsites = async () => {
+    const getSitesFromDatabase = async () => {
       try {
         const response = await fetch(
           "http://localhost:3000/api/getData",
@@ -42,29 +37,37 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
             },
           }
         );
-        const data = await response.json();
-        setWebsitesMongo(data);
+        const { data } = await response.json();
+        sessionStorage.setItem('domains', JSON.stringify(data));
       } catch (err) {
-        console.log("error i mongofetch eventid", err);
+        console.log("error in mongofetch eventid", err);
       }
     };
-    getWebsites() 
+    getSitesFromDatabase();
   }, []);
-  console.log(websitesMongo)
-
- /*  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValueDomain(event.target.value);
-  }; */
-
   
   const handleDomainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value.trim().toLowerCase();
-    const matchingSite = websitesMongo.find(site => site.website === input);
-    if (matchingSite) {
-      console.log('Input value matches website:', matchingSite.website);
+    const storedDomains: Domain[] = JSON.parse(sessionStorage.getItem('domains') || '[]');
+  
+    if (Array.isArray(storedDomains)) {
+      const matchingSite = storedDomains.find(site => {
+        const siteDomain = site.domains;
+        if (siteDomain === input || siteDomain === input + '.com') {
+          return true;
+        }
+        return false;
+      });
+  
+      if (matchingSite) {
+        console.log('Input value matches website:', matchingSite.domains);
+      } else {
+        console.log('Input value does not match any website');
+      }
     } else {
-      console.log('Input value does not match any website');
+      console.log('Error in stored domains');
     }
+    
     setInputValueDomain(input);
   };
 
@@ -100,12 +103,12 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
         <h5 className={styles.attributesTitle}> Attributes:</h5>
         <div className={styles.inputSiteAndPath}>
           <div className={styles.domainAndPath}>
-            <div >
+          <div >
               <input type="text" id="domain" name="domain" value={inputValueDomain} onChange={handleDomainChange} placeholder='Domain'></input>
-            </div>
-            <div>
-              <input type="text" id="path" onChange={handleDomainChange} placeholder="Path" />
-            </div>
+              </div>
+              <div>
+                <input type="text" id="path"  onChange={handlePathChange} placeholder="Path" />
+              </div>
           </div>
           <div className={styles.selectAndCheck}>
             <select id="samesite" value={selectSameSite} onChange={sameSiteChange}>

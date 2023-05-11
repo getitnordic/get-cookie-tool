@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '@/styles/Home.module.scss';
 
 /* utils */
-import { fetchPublicSuffixList } from './utils/utils';
+/* import { fetchPublicSuffixList } from './utils/utils'; */
 
 /* components */
 import Navbar from './components/Navbar';
