@@ -13,39 +13,38 @@ const Footer = () => {
           <div className={styles.personLinks}>
             <h3 className={styles.footerName}>Repos</h3>
             <Link href="https://github.com/getitnordic/get-cookie-tool">
-              <FontAwesomeIcon icon={faGithub} style={{ fontSize: 30, color: 'grey' }} />
+              <FontAwesomeIcon icon={faGithub}  className={styles.githubLogoRepo}  />
             </Link>
           </div>
           <div className={styles.personLinks}>
             <h3 className={styles.footerName}>Joar Warholm</h3>
             <Link href="https://github.com/joarwar">
-              <FontAwesomeIcon icon={faGithub} style={{ fontSize: 20, color: 'black' }} />
+              <FontAwesomeIcon icon={faGithub}  className={styles.githubLogo} />
             </Link>
             <Link href="https://www.linkedin.com/in/joargunnarwarholm/">
-              <FontAwesomeIcon icon={faLinkedin} style={{ fontSize: 20, color: 'lightblue' }} />
+              <FontAwesomeIcon icon={faLinkedin} className={styles.linkedInLogo}  />
             </Link>
           </div>
           <div className={styles.personLinks}>
             <h3 className={styles.footerName}>Sam Faravahar</h3>
             <Link href="https://github.com/Samrad84">
-              <FontAwesomeIcon icon={faGithub} style={{ fontSize: 20, color: 'black' }} />
+              <FontAwesomeIcon icon={faGithub} className={styles.githubLogo}  />
             </Link>
             <Link href="https://www.linkedin.com/in/sam-faravahar/">
-              <FontAwesomeIcon icon={faLinkedin} style={{ fontSize: 20, color: 'lightblue' }} />
+              <FontAwesomeIcon icon={faLinkedin}  className={styles.linkedInLogo} />
             </Link>
           </div>
           <div className={styles.personLinks}>
             <h3 className={styles.footerName}>Philip Rydqvist</h3>
             <Link href="https://github.com/PhilipRydqvist">
-              <FontAwesomeIcon icon={faGithub} style={{ fontSize: 20, color: 'black' }} />
+              <FontAwesomeIcon icon={faGithub} className={styles.githubLogo}  />
             </Link>
             <Link href="https://www.linkedin.com/in/philip-rydqvist/">
-              <FontAwesomeIcon icon={faLinkedin} style={{ fontSize: 20, color: 'lightblue' }} />
+              <FontAwesomeIcon icon={faLinkedin} className={styles.linkedInLogo}  />
             </Link>
           </div>
         </div>
       </section>
-      <section></section>
       <div className={styles.copyRight}>
         <p>&copy; 2023 Created by Joar, Sam & Philip</p>
       </div>
