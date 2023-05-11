@@ -6,6 +6,8 @@ export const CompareCookie = () => {
 const [inputValue, setInputValue] = useState('');
 const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
 const [selectSameSite, setSelectSameSite] = useState<string>('');
+const [inputValueDomain, setInputValueDomain] = useState("");
+  const [inputValueUrl, setInputValueUrl] = useState('');
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -19,13 +21,9 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
     setSelectSameSite(event.target.value);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-
-
-  const [inputValueDomain, setInputValueDomain] = useState("");
-  const [inputValueUrl, setInputValueUrl] = useState('');
   
   useEffect(() => {
     const getSitesFromDatabase = async () => {
@@ -115,7 +113,7 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
               <input type="text" id="domain" name="domain" value={inputValueDomain} onChange={handleDomainChange} placeholder='Domain'></input>
               </div>
               <div>
-                <input type="text" id="path"  /* onChange={handleDomainChange}  */placeholder="Path" />
+                <input type="text" id="path"  onChange={handlePathChange} placeholder="Path" />
               </div>
             </div>
             <div className={styles.selectAndCheck}>
