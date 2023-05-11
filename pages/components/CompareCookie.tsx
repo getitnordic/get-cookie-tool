@@ -10,17 +10,33 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
 const [inputValueDomain, setInputValueDomain] = useState("");
 const [inputValueUrl, setInputValueUrl] = useState('');
 const [inputValueUrlCheck, setInputValueUrlCheck] = useState('');
-
+const [checkHttpOnly, setCheckHttpOnly] = useState('');
+const [checkSecure, setCheckSecure] = useState('');
 
 const [matchingDomain, setMatchingDomain] = useState('');
 
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+    const { value, checked } = event.target;
     const updatedSelectedCheckboxes = selectedCheckboxes.includes(value)
       ? selectedCheckboxes.filter((checkbox) => checkbox !== value)
       : [...selectedCheckboxes, value];
     setSelectedCheckboxes(updatedSelectedCheckboxes);
+    if (value === 'HttpOnly') {
+      if (checked) {
+        setCheckHttpOnly("true");
+      } else {
+        setCheckHttpOnly("false");
+      }
+    }
+  
+    if (value === 'Secure') {
+      if (checked) {
+        setCheckSecure("true");
+      } else {
+        setCheckSecure("false");
+      }
+    }
   };
 
   const sameSiteChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,19 +46,43 @@ const [matchingDomain, setMatchingDomain] = useState('');
   const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-  const handleMyUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValueUrlCheck(event.target.value);
 
+    const handleMyUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setInputValue(value);
+    checkInputForHttp(value);
   };
-  const checkMyUrlChange = () => {
-    if (inputValueUrl.includes('http') || inputValueUrl.includes('https')) {
-      console.log('The input includes "http" or "https".');
-      // Perform additional actions if the input includes "http" or "https"
+  const checkInputForHttp = (value: string | string[]) => {
+
+    if (selectSameSite === "none"){
+      if (checkHttpOnly === "true"){
+        console.log("HTTPONLY")
+      }
+      else if (checkHttpOnly === "false"){
+        console.log("HTTPONLY FALSE")
+      }
+    }
+    else if (selectSameSite.includes('lax')){
+
+    }
+    else if (selectSameSite.includes('strict')){
+
+    }
+    if (value.includes('https')) {
+      console.log('The input includes "https".');
+      if (selectSameSite.includes('lax')){
+        console.log("hi");
+      }
+    } else if (value.includes('http')) {
+      console.log('The input includes "http".');
+      // Perform additional actions if the input includes "http"
     } else {
       console.log('The input does not include "http" or "https".');
       // Perform alternative actions if the input does not include "http" or "https"
     }
-  }
+  };
+
+
   
   useEffect(() => {
     const getSitesFromDatabase = async () => {
@@ -106,7 +146,7 @@ const [matchingDomain, setMatchingDomain] = useState('');
             <div className={styles.howToUse}>
               <h2>How to Use</h2>
               <p>
-                Enter the domain and TLD (if there is any) you want to check, e.g. "top.example.com".
+                Enter the domain and subdomains (if there is any) you want to check, e.g. "top.example.com".
                 <br></br>
                 Add any relevant subdirectories (paths), e.g. "/blog".
                 <br></br>
@@ -155,7 +195,7 @@ const [matchingDomain, setMatchingDomain] = useState('');
 
         </div>
         <div className={styles.myUrl}>
-            <input type="text" id="myUrl" name="myUrl" placeholder='My Url' onChange={checkMyUrlChange}></input>
+            <input type="text" id="myUrl" name="myUrl" placeholder='My Url' value={inputValue} onChange={handleMyUrlChange}></input>
           </div>
 
 
