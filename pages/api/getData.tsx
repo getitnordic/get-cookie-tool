@@ -7,6 +7,8 @@ const handler: NextApiHandler = async (req, res) => {
   const client: MongoClient = await clientPromise;
   const db = client.db("my-new-list");
 
+  console.log(req.body, "reqbody");
+
   switch (req.method) {
     case "POST":
       let bodyObject: Domain = JSON.parse(req.body);

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from '/styles/CompareCookies.module.scss';
-
-interface Site {
-  website: string;
-}
+import { Domain } from '../api/interfaces/Domain';
 
 export const CompareCookie = () => {
 const [inputValue, setInputValue] = useState('');
@@ -26,12 +23,12 @@ const [selectSameSite, setSelectSameSite] = useState<string>('');
     setInputValue(event.target.value);
   };
 
-  const [websitesMongo, setWebsitesMongo] = useState<Site[]>([]);
-const [inputValueDomain, setInputValueDomain] = useState("");
-const [inputValueUrl, setInputValueUrl] = useState('');
 
+  const [inputValueDomain, setInputValueDomain] = useState("");
+  const [inputValueUrl, setInputValueUrl] = useState('');
+  
   useEffect(() => {
-    const getWebsites = async () => {
+    const getSitesFromDatabase = async () => {
       try {
         const response = await fetch(
           "http://localhost:3000/api/getData",
@@ -42,26 +39,51 @@ const [inputValueUrl, setInputValueUrl] = useState('');
             },
           }
         );
-        const data = await response.json();
-        setWebsitesMongo(data);
+        const { data } = await response.json();
+        sessionStorage.setItem('domains', JSON.stringify(data));
       } catch (err) {
-        console.log("error i mongofetch eventid", err);
+        console.log("error in mongofetch eventid", err);
       }
     };
-    getWebsites() 
+    getSitesFromDatabase();
   }, []);
-  console.log(websitesMongo)
   
   const handleDomainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value.trim().toLowerCase();
-    const matchingSite = websitesMongo.find(site => site.website === input);
+    const storedDomains: Domain[] = JSON.parse(sessionStorage.getItem('domains') || '[]');
+  
+    if (Array.isArray(storedDomains)) {
+      const matchingSite = storedDomains.find(site => {
+        const siteDomain = site.domains;
+        if (siteDomain === input || siteDomain === input + '.com') {
+          return true;
+        }
+        return false;
+      });
+  
+      if (matchingSite) {
+        console.log('Input value matches website:', matchingSite.domains);
+      } else {
+        console.log('Input value does not match any website');
+      }
+    } else {
+      console.log('Error in stored domains');
+    }
+    
+    setInputValueDomain(input);
+  };
+
+  
+ /*  const handleDomainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const input = event.target.value.trim().toLowerCase();
+    const matchingSite = websitesMongo.find(site => site.domains === input);
     if (matchingSite) {
-      console.log('Input value matches website:', matchingSite.website);
+      console.log('Input value matches website:', matchingSite.domains);
     } else {
       console.log('Input value does not match any website');
     }
     setInputValueDomain(input);
-  };
+  }; */
 
   return (
     <div className={styles.wholeContainer}>
@@ -93,7 +115,7 @@ const [inputValueUrl, setInputValueUrl] = useState('');
               <input type="text" id="domain" name="domain" value={inputValueDomain} onChange={handleDomainChange} placeholder='Domain'></input>
               </div>
               <div>
-                <input type="text" id="path"  onChange={handleDomainChange} placeholder="Path" />
+                <input type="text" id="path"  /* onChange={handleDomainChange}  */placeholder="Path" />
               </div>
             </div>
             <div className={styles.selectAndCheck}>
