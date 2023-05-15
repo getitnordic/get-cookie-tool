@@ -4,16 +4,30 @@ import { Domain } from '../api/interfaces/Domain';
 import Link from 'next/link';
 
 export const CompareCookie = () => {
-const [inputValue, setInputValue] = useState('');
-const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
-const [selectSameSite, setSelectSameSite] = useState<string>('');
-const [inputValueDomain, setInputValueDomain] = useState("");
+/* My own url */
 const [inputValueUrl, setInputValueUrl] = useState('');
 const [inputValueUrlCheck, setInputValueUrlCheck] = useState('');
+
+/* domain */
+const [inputValueDomain, setInputValueDomain] = useState("");
+const [matchingDomain, setMatchingDomain] = useState('');
+
+/*path*/
+const [inputValuePath, setInputValuePath] = useState('');
+
+
+/* checkboxes and dropdown */
+const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
+const [selectSameSite, setSelectSameSite] = useState<string>('');
 const [checkHttpOnly, setCheckHttpOnly] = useState('');
 const [checkSecure, setCheckSecure] = useState('');
 
-const [matchingDomain, setMatchingDomain] = useState('');
+/* unclear */
+const [inputValue, setInputValue] = useState('');
+  
+  
+
+
 
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +58,7 @@ const [matchingDomain, setMatchingDomain] = useState('');
   };
 
   const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    setInputValuePath(event.target.value);
   };
 
     const handleMyUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +66,7 @@ const [matchingDomain, setMatchingDomain] = useState('');
     setInputValue(value);
     checkInputForHttp(value);
   };
+
   const checkInputForHttp = (value: string | string[]) => {
 
     if (selectSameSite === "none"){
@@ -83,7 +98,9 @@ const [matchingDomain, setMatchingDomain] = useState('');
   };
 
 
-  
+
+
+  /* Domain fetch */
   useEffect(() => {
     const getSitesFromDatabase = async () => {
       try {
@@ -104,33 +121,28 @@ const [matchingDomain, setMatchingDomain] = useState('');
     };
     getSitesFromDatabase();
   }, []);
-  
+  /* Domain check */
   const handleDomainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value.trim().toLowerCase();
     const storedDomains: Domain[] = JSON.parse(sessionStorage.getItem('domains') || '[]');
-  
     if (Array.isArray(storedDomains)) {
       const matchingSite = storedDomains.find(site => {
         const siteDomain = site.domains;
-        if (siteDomain === input || siteDomain === input + '.com') {
+        if (siteDomain === input || siteDomain === input) {
           return true;
         }
         return false;
       });
-  
       if (matchingSite) {
         console.log('Input value matches website:', matchingSite.domains);
         setMatchingDomain(matchingSite.domains);
-        
-
       } else {
         console.log('Input value does not match any website');
         setMatchingDomain('');
       }
     } else {
       console.log('Error in stored domains');
-    }
-    
+    }  
     setInputValueDomain(input);
   };
 
@@ -195,7 +207,7 @@ const [matchingDomain, setMatchingDomain] = useState('');
 
         </div>
         <div className={styles.myUrl}>
-            <input type="text" id="myUrl" name="myUrl" placeholder='My Url' value={inputValue} onChange={handleMyUrlChange}></input>
+            <input type="text" id="myUrl" name="myUrl" placeholder='My Url' value={inputValueUrl} onChange={handleMyUrlChange}></input>
           </div>
 
 
