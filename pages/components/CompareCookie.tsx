@@ -205,18 +205,18 @@ const [matchingDomain, setMatchingDomain] = useState('');
               <h5 className={styles.resultTitle}> Result:</h5>
               <div className={styles.textResult}>
               <div className={styles.publicListResult}>
-                  {matchingDomain !== '' && <p><strong>Domain:</strong> The <strong>{matchingDomain}</strong> domain exists on <a  href="https://publicsuffix.org/list/public_suffix_list.dat "  ><strong>Public suffix list</strong></a> meaning that it won't be able to interact with other domains. Read more about this <a href="https://publicsuffix.org/learn/ "><strong>here.</strong></a></p>}
-                  {matchingDomain === '' && <p></p>}
+                  {matchingDomain !== '' && <p><strong>Domain:</strong> The <strong>{matchingDomain}</strong> domain exists on <a  href="https://publicsuffix.org/list/public_suffix_list.dat "  ><strong>Public suffix list</strong></a> meaning that it won't be able to interact with other domains, However it may be able to interact with their subdomains. Read more about this <a href="https://publicsuffix.org/learn/ "><strong>here.</strong></a></p>}
+                  {matchingDomain === '' && <p><strong>Domain:</strong> The <strong>{inputValueDomain}</strong> domain attribute will also make it accesible on it's subdomains. </p>}
                 </div>
                 <div className={styles.myUrlResult}>
                   {inputValueUrl !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrl</p>}
                   {inputValueUrlCheck !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrlCheck</p>}
-                  {inputValueUrl === '' && <p>Empty</p>}
-                  {inputValueUrlCheck === '' && <p>Empty Check </p>}
+                  {/* {inputValueUrl === '' && <p>Empty</p>}
+                  {inputValueUrlCheck === '' && <p>Empty Check </p>} */}
                 </div>
                 <div className={styles.pathResult}>
                   {inputValue === '' && <p> <strong>Path:</strong> If a cookie does not have a "Path" attribute set, it is generally available to the entire domain that set the cookie.</p>}
-                  {inputValue !== '' && <p> <strong>Path:</strong> "Path" attribute is set to {inputValue}, which means that the cookie will only be sent to the server with requests that are made to the  {inputValue} directory.</p>}
+                  {inputValue !== '' && <p> <strong>Path:</strong> "Path" attribute is set to {inputValue}, which means that the cookie will only be sent to the server with requests that are made to the  {inputValue} directory and their subpaths.</p>}
                 </div>
                 <div className={styles.sameSiteResult}>
                   {selectSameSite === 'choose' && <p>
