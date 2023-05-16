@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '/styles/CompareCookies.module.scss';
 import { Domain } from '../api/interfaces/Domain';
+import Link from 'next/link';
 
 export const CompareCookie = () => {
 const [inputValue, setInputValue] = useState('');
@@ -8,13 +9,34 @@ const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
 const [selectSameSite, setSelectSameSite] = useState<string>('');
 const [inputValueDomain, setInputValueDomain] = useState("");
 const [inputValueUrl, setInputValueUrl] = useState('');
+const [inputValueUrlCheck, setInputValueUrlCheck] = useState('');
+const [checkHttpOnly, setCheckHttpOnly] = useState('');
+const [checkSecure, setCheckSecure] = useState('');
+
+const [matchingDomain, setMatchingDomain] = useState('');
+
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+    const { value, checked } = event.target;
     const updatedSelectedCheckboxes = selectedCheckboxes.includes(value)
       ? selectedCheckboxes.filter((checkbox) => checkbox !== value)
       : [...selectedCheckboxes, value];
     setSelectedCheckboxes(updatedSelectedCheckboxes);
+    if (value === 'HttpOnly') {
+      if (checked) {
+        setCheckHttpOnly("true");
+      } else {
+        setCheckHttpOnly("false");
+      }
+    }
+  
+    if (value === 'Secure') {
+      if (checked) {
+        setCheckSecure("true");
+      } else {
+        setCheckSecure("false");
+      }
+    }
   };
 
   const sameSiteChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -24,6 +46,43 @@ const [inputValueUrl, setInputValueUrl] = useState('');
   const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
+
+    const handleMyUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setInputValue(value);
+    checkInputForHttp(value);
+  };
+  const checkInputForHttp = (value: string | string[]) => {
+
+    if (selectSameSite === "none"){
+      if (checkHttpOnly === "true"){
+        console.log("HTTPONLY")
+      }
+      else if (checkHttpOnly === "false"){
+        console.log("HTTPONLY FALSE")
+      }
+    }
+    else if (selectSameSite.includes('lax')){
+
+    }
+    else if (selectSameSite.includes('strict')){
+
+    }
+    if (value.includes('https')) {
+      console.log('The input includes "https".');
+      if (selectSameSite.includes('lax')){
+        console.log("hi");
+      }
+    } else if (value.includes('http')) {
+      console.log('The input includes "http".');
+      // Perform additional actions if the input includes "http"
+    } else {
+      console.log('The input does not include "http" or "https".');
+      // Perform alternative actions if the input does not include "http" or "https"
+    }
+  };
+
+
   
   useEffect(() => {
     const getSitesFromDatabase = async () => {
@@ -61,8 +120,12 @@ const [inputValueUrl, setInputValueUrl] = useState('');
   
       if (matchingSite) {
         console.log('Input value matches website:', matchingSite.domains);
+        setMatchingDomain(matchingSite.domains);
+        
+
       } else {
         console.log('Input value does not match any website');
+        setMatchingDomain('');
       }
     } else {
       console.log('Error in stored domains');
@@ -83,7 +146,7 @@ const [inputValueUrl, setInputValueUrl] = useState('');
             <div className={styles.howToUse}>
               <h2>How to Use</h2>
               <p>
-                Enter the domain and TLD (if there is any) you want to check, e.g. "top.example.com".
+                Enter the domain and subdomains (if there is any) you want to check, e.g. "top.example.com".
                 <br></br>
                 Add any relevant subdirectories (paths), e.g. "/blog".
                 <br></br>
@@ -132,7 +195,7 @@ const [inputValueUrl, setInputValueUrl] = useState('');
 
         </div>
         <div className={styles.myUrl}>
-            <input type="text" id="myUrl" name="myUrl" placeholder='My Url'></input>
+            <input type="text" id="myUrl" name="myUrl" placeholder='My Url' value={inputValue} onChange={handleMyUrlChange}></input>
           </div>
 
 
@@ -141,9 +204,19 @@ const [inputValueUrl, setInputValueUrl] = useState('');
             <div className={styles.result}>
               <h5 className={styles.resultTitle}> Result:</h5>
               <div className={styles.textResult}>
+              <div className={styles.publicListResult}>
+                  {matchingDomain !== '' && <p><strong>Domain:</strong> The <strong>{matchingDomain}</strong> domain exists on <a  href="https://publicsuffix.org/list/public_suffix_list.dat "  ><strong>Public suffix list</strong></a> meaning that it won't be able to interact with other domains, However it may be able to interact with their subdomains. Read more about this <a href="https://publicsuffix.org/learn/ "><strong>here.</strong></a></p>}
+                  {matchingDomain === '' && <p><strong>Domain:</strong> The <strong>{inputValueDomain}</strong> domain attribute will also make it accesible on it's subdomains. </p>}
+                </div>
+                <div className={styles.myUrlResult}>
+                  {inputValueUrl !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrl</p>}
+                  {inputValueUrlCheck !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrlCheck</p>}
+                  {/* {inputValueUrl === '' && <p>Empty</p>}
+                  {inputValueUrlCheck === '' && <p>Empty Check </p>} */}
+                </div>
                 <div className={styles.pathResult}>
                   {inputValue === '' && <p> <strong>Path:</strong> If a cookie does not have a "Path" attribute set, it is generally available to the entire domain that set the cookie.</p>}
-                  {inputValue !== '' && <p> <strong>Path:</strong> "Path" attribute is set to {inputValue}, which means that the cookie will only be sent to the server with requests that are made to the  {inputValue} directory.</p>}
+                  {inputValue !== '' && <p> <strong>Path:</strong> "Path" attribute is set to {inputValue}, which means that the cookie will only be sent to the server with requests that are made to the  {inputValue} directory and their subpaths.</p>}
                 </div>
                 <div className={styles.sameSiteResult}>
                   {selectSameSite === 'choose' && <p>
