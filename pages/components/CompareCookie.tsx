@@ -74,13 +74,11 @@ const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
   const checkInputForHttp = (value: string) => {
     if (value.includes('https')) {
-      console.log('The input includes "https".');
+     ;
       setInputValueUrlCheck("https");
     } else if (value.includes('http')) {
-      console.log('The input includes "http".');
       setInputValueUrlCheck("http");
     } else {
-      console.log('The input does not include "http" or "https".');
       setInputValueUrlCheck("*missing http/https");
     }
   };
@@ -101,7 +99,7 @@ const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { data } = await response.json();
         sessionStorage.setItem('domains', JSON.stringify(data));
       } catch (err) {
-        console.log("error in mongofetch eventid", err);
+        
       }
     };
     getSitesFromDatabase();
@@ -120,14 +118,14 @@ const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         return false;
       });
       if (matchingSite) {
-        console.log('Input value matches website:', matchingSite.domains);
+        
         setMatchingDomain(matchingSite.domains);
       } else {
-        console.log('Input value does not match any website');
+        
         setMatchingDomain('');
       }
     } else {
-      console.log('Error in stored domains');
+      
     }  
     setInputValueDomain(input);
   };
@@ -234,8 +232,8 @@ const handlePathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
               <div className={styles.checkBoxResult}>
                 {selectedCheckboxes.map((value) => (
                   <p key={value}>
-                    {value === 'Secure' && <p><strong>Secure:</strong> Your url <u>{inputValueUrlCheck}</u>. If the cookie is secure it will only be allowed to be sent over secured connections (HTTPS).</p>}
-                    {value === 'HttpOnly' && <p><strong>HttpOnly:</strong> Cookie can only be accessed through HTTP/S requests and not through client-side scripts. It is only needed for one website to have HTTPOnly. </p>}
+                    {value === 'Secure' && <span><strong>Secure:</strong> Your url <u>{inputValueUrlCheck}</u>. If the cookie is secure it will only be allowed to be sent over secured connections (HTTPS).</span>}
+                    {value === 'HttpOnly' && <span><strong>HttpOnly:</strong> Cookie can only be accessed through HTTP/S requests and not through client-side scripts. It is only needed for one website to have HTTPOnly. </span>}
                   </p>
                 ))}
               </div>
