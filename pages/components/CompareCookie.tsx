@@ -3,6 +3,13 @@ import styles from '/styles/CompareCookies.module.scss';
 import { Domain } from '../api/interfaces/Domain';
 import Link from 'next/link';
 
+interface InputData {
+  type: 'checkbox' | 'select' | 'input';
+  value: string;
+  state: boolean | string;
+  setState: React.Dispatch<React.SetStateAction<boolean>> | React.Dispatch<React.SetStateAction<string>>;
+}
+
 export const CompareCookie = () => {
 /* My own url */
 const [inputValueUrl, setInputValueUrl] = useState('');
@@ -15,43 +22,35 @@ const [matchingDomain, setMatchingDomain] = useState('');
 /*path*/
 const [inputValuePath, setInputValuePath] = useState('');
 
-
 /* checkboxes and dropdown */
 const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
 const [selectSameSite, setSelectSameSite] = useState<string>('');
-const [checkHttpOnly, setCheckHttpOnly] = useState('');
-const [checkSecure, setCheckSecure] = useState('');
+const [checkHttpOnly, setCheckHttpOnly] = useState(false);
+const [checkSecure, setCheckSecure] = useState(false);
 
 /* unclear */
-const [inputValue, setInputValue] = useState('');
-  
-  
+const [inputValue, setInputValue] = useState<string>('');
 
+const inputs: InputData[] = [
+  { type: 'checkbox', value: 'HttpOnly', state: checkHttpOnly, setState: setCheckHttpOnly },
+  { type: 'checkbox', value: 'Secure', state: checkSecure, setState: setCheckSecure },
+  { type: 'select', value: 'choose', state: selectSameSite, setState: setSelectSameSite },
+  { type: 'input', value: inputValue, state: inputValue, setState: setInputValue },
+];
 
-
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
     const updatedSelectedCheckboxes = selectedCheckboxes.includes(value)
       ? selectedCheckboxes.filter((checkbox) => checkbox !== value)
       : [...selectedCheckboxes, value];
     setSelectedCheckboxes(updatedSelectedCheckboxes);
     if (value === 'HttpOnly') {
-      if (checked) {
-        setCheckHttpOnly("true");
-      } else {
-        setCheckHttpOnly("false");
-      }
+      setCheckHttpOnly(checked);
     }
-  
     if (value === 'Secure') {
-      if (checked) {
-        setCheckSecure("true");
-      } else {
-        setCheckSecure("false");
-      }
+      setCheckSecure(checked);
     }
-  };
+  }; 
 
   const sameSiteChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectSameSite(event.target.value);
@@ -61,45 +60,65 @@ const [inputValue, setInputValue] = useState('');
     setInputValuePath(event.target.value);
   };
 
-    const handleMyUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMyUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setInputValue(value);
+    setInputValueUrl(value); 
+    setInputValueUrlCheck(event.target.value);
     checkInputForHttp(value);
   };
+  
 
-  const checkInputForHttp = (value: string | string[]) => {
-
-    if (selectSameSite === "none"){
-      if (checkHttpOnly === "true"){
-        console.log("HTTPONLY")
+  const checkInputForHttp = (value: string) => {
+    if (selectSameSite === 'none') {
+      if (checkHttpOnly) {
+        console.log('HTTPOnly');
+      } else {
+        console.log('HTTPOnly FALSE');
       }
-      else if (checkHttpOnly === "false"){
-        console.log("HTTPONLY FALSE")
-      }
+    } else if (selectSameSite === 'lax') {
+      console.log('Lax');
+    } else if (selectSameSite === 'strict') {
+      console.log('Strict');
     }
-    else if (selectSameSite.includes('lax')){
-
-    }
-    else if (selectSameSite.includes('strict')){
-
-    }
+  
     if (value.includes('https')) {
       console.log('The input includes "https".');
-      if (selectSameSite.includes('lax')){
-        console.log("hi");
+      if (selectSameSite === 'lax') {
+        console.log('Lax');
+        setInputValueUrlCheck("https")
       }
     } else if (value.includes('http')) {
       console.log('The input includes "http".');
-      // Perform additional actions if the input includes "http"
+      setInputValueUrlCheck("http")
     } else {
       console.log('The input does not include "http" or "https".');
-      // Perform alternative actions if the input does not include "http" or "https"
+      setInputValueUrlCheck("*missing http/https")
     }
   };
-
-
-
-
+  
+  const handleInputChange = (
+    index: number,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { type, value } = event.target as HTMLInputElement;
+    const isChecked = (event.target as HTMLInputElement).checked;
+  
+    if (type === 'checkbox') {
+      setSelectedCheckboxes((prevCheckboxes) => {
+        const updatedCheckboxes = prevCheckboxes.includes(value)
+          ? prevCheckboxes.filter((checkbox) => checkbox !== value)
+          : [...prevCheckboxes, value];
+        return updatedCheckboxes;
+      });
+    } else {
+      const input = inputs[index];
+      setInputValue(value); // Update the state using the setter function
+      if (input.type === 'input' && input.value === 'myUrl') {
+        checkInputForHttp(value);
+      }
+    }
+  };
+  
   /* Domain fetch */
   useEffect(() => {
     const getSitesFromDatabase = async () => {
@@ -182,10 +201,11 @@ const [inputValue, setInputValue] = useState('');
               <input type="text" id="domain" name="domain" value={inputValueDomain} onChange={handleDomainChange} placeholder='Domain'></input>
               </div>
               <div>
-                <input type="text" id="path"  onChange={handlePathChange} placeholder="Path" />
+              <input type="text" id="path" value={inputValuePath} onChange={handlePathChange} placeholder="Path" />
+
               </div>
           </div>
-          <div className={styles.selectAndCheck}>
+         {/*  <div className={styles.selectAndCheck}>
             <select id="samesite" value={selectSameSite} onChange={sameSiteChange}>
               <option value="choose">--SameSite--</option>
               <option value="none">None</option>
@@ -203,16 +223,42 @@ const [inputValue, setInputValue] = useState('');
                 <p className={styles.checkBoxText2}>Secure</p>
               </div>
             </div>
-          </div>
+          </div> */}
 
+<select id="samesite" value={selectSameSite} onChange={(e) => handleInputChange(2, e)}>
+  <option value="choose">--SameSite--</option>
+  <option value="none">None</option>
+  <option value="lax">Lax</option>
+  <option value="strict">Strict</option>
+</select>
+<div className={styles.checkBox}>
+  <div className={styles.checkBox1}>
+    <input
+      className={styles.checkBoxPress}
+      type="checkbox"
+      value="HttpOnly"
+      checked={checkHttpOnly}
+      onChange={(e) => handleInputChange(0, e)}
+    />
+    <span className={styles.checkBoxText}>HttpOnly</span>
+  </div>
+  <div className={styles.checkBox2}>
+    <input
+      className={styles.checkBoxPress}
+      type="checkbox"
+      value="Secure"
+      checked={checkSecure}
+      onChange={(e) => handleInputChange(1, e)}
+    />
+    <span className={styles.checkBoxText}>Secure</span>
+  </div>
+</div>
         </div>
         <div className={styles.myUrl}>
             <input type="text" id="myUrl" name="myUrl" placeholder='My Url' value={inputValueUrl} onChange={handleMyUrlChange}></input>
           </div>
-
-
+          
           <div className={styles.wholeCookie}>
-
             <div className={styles.result}>
               <h5 className={styles.resultTitle}> Result:</h5>
               <div className={styles.textResult}>
@@ -221,14 +267,12 @@ const [inputValue, setInputValue] = useState('');
                   {matchingDomain === '' && <p></p>}
                 </div>
                 <div className={styles.myUrlResult}>
-                  {inputValueUrl !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrl</p>}
-                  {inputValueUrlCheck !== '' && <p><strong>Url:</strong> {inputValueUrlCheck}  {inputValueUrl} inputvalueUrlCheck</p>}
+                  {inputValueUrl !== '' && <p><strong>Url:</strong> {inputValueUrl}</p>}
                   {inputValueUrl === '' && <p>Empty</p>}
-                  {inputValueUrlCheck === '' && <p>Empty Check </p>}
                 </div>
                 <div className={styles.pathResult}>
-                  {inputValue === '' && <p> <strong>Path:</strong> If a cookie does not have a "Path" attribute set, it is generally available to the entire domain that set the cookie.</p>}
-                  {inputValue !== '' && <p> <strong>Path:</strong> "Path" attribute is set to {inputValue}, which means that the cookie will only be sent to the server with requests that are made to the  {inputValue} directory.</p>}
+                  {inputValuePath === '' && <p> <strong>Path:</strong> If a cookie does not have a "Path" attribute set, it is generally available to the entire domain that set the cookie.</p>}
+                  {inputValuePath !== '' && <p> <strong>Path:</strong> "Path" attribute is set to {inputValuePath}, which means that the cookie will only be sent to the server with requests that are made to the  {inputValuePath} directory.</p>}
                 </div>
                 <div className={styles.sameSiteResult}>
                   {selectSameSite === 'choose' && <p>
@@ -250,18 +294,14 @@ const [inputValue, setInputValue] = useState('');
               <div className={styles.checkBoxResult}>
                 {selectedCheckboxes.map((value) => (
                   <p key={value}>
-                    {value === 'Secure' && <p><strong>Secure:</strong> If the cookie is secure it will only be allowed to be sent over secured connections (HTTPS).</p>}
-                    {value === 'HttpOnly' && <p><strong>HttpOnly:</strong> Cookie can only be accessed through HTTP/S requests and not through client-side scripts. It is only needed for one website to have HTTPOnly. </p>}
+                    {value === 'Secure' && <span><strong>Secure:</strong> Your url {inputValueUrlCheck}. If the cookie is secure it will only be allowed to be sent over secured connections (HTTPS).</span>}
+                    {value === 'HttpOnly' && <span><strong>HttpOnly:</strong> Cookie can only be accessed through HTTP/S requests and not through client-side scripts. It is only needed for one website to have HTTPOnly. </span>}
                   </p>
                 ))}
               </div>
-
             </div>
           </div>
         </div>
-        
-
-
     );
   };
 
